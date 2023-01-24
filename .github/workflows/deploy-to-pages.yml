@@ -15,7 +15,6 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      -
       - name: Commit
         run: |
           mkdir -p dist/${{ github.base_ref }}
