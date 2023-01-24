@@ -22,7 +22,7 @@ jobs:
           cp -r tmp/${{ github.head_ref }} dist/
           rm -r tmp
           git add .
-          git commit -m "Update doc"
+          git commit -m "Update doc. branch:${{github.head_ref}}, sha:${{github.sha}}"
       - name: Push
         uses: ad-m/github-push-action@master
         with:
