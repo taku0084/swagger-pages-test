@@ -1,10 +1,6 @@
 name: deploy-to-pages
 
-on:
-  push:
-    branches-ignore:
-      - "gh-pages"
-  pull_request:
+on: [pull_request]
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -15,16 +11,18 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      -
       - name: Commit
         run: |
-          mkdir -p dist/${{ github.base_ref }}
-          cp -r src dist/${{ github.base_ref }}/
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
+          mkdir -p tmp/${{ github.head_ref }}
+          cp -r src/* tmp/${{ github.head_ref }}/
           git checkout gh-pages
+          cp -r tmp/${{ github.head_ref }} dist/
+          rm -r tmp
           git add .
-          git commit -m "Update doc"
+          git commit -m "update doc. ${{github.head_ref}}:${{github.sha}}"
       - name: Push
         uses: ad-m/github-push-action@master
         with:
