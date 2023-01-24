@@ -13,11 +13,14 @@ jobs:
           fetch-depth: 0
       - name: Commit
         run: |
-          mkdir -p dist/${{github.head_ref}}
-          cp -r src dist/${{github.head_ref}}/
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
+          mkdir -p tmp/${{ github.base_ref }}
+          cp -r src tmp/${{ github.base_ref }}/
           git checkout gh-pages
+          cp -r tmp/${{ github.base_ref }} dist/
+          rm -r tmp
           git add .
           git commit -m "Update doc"
       - name: Push
