@@ -13,8 +13,8 @@ jobs:
           fetch-depth: 0
       - name: Commit
         run: |
-          mkdir -p dist/${{ github.base_ref }}
-          cp -r src dist/${{ github.base_ref }}/
+          mkdir -p dist/${{github.head_ref}}
+          cp -r src dist/${{github.head_ref}}/
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git checkout gh-pages
